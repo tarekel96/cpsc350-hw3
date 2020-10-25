@@ -73,14 +73,13 @@ int main(int argc, char ** argv){
       DE_2->pass() ? cout << "COMPILED" : cout << "FAILED";
       cout << endl;
       response = getResponse();
+      delete DE_2;
+      delete FE_2;
     }
   }
   else if(response == 0){
     cout << "PROGRAM TERMINATED" << endl;
-    delete DE_2;
-    delete FE_2;
     return 0;
   }
-
   return 0;
 }
