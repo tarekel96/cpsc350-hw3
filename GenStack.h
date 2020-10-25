@@ -4,19 +4,21 @@
 using namespace std;
 /*
   * @name GenStack - a Stack Data Structure implemented with a template class and an m_stackArray
+  * @author Tarek El-Hajjaoui
+  * @version 1.0
 */
 template <class T>
 class GenStack{
   private:
-    T *m_stackArray;  /* the array pointer that is used to implement the Stack and store the values of the Stack */
+    T* m_stackArray;  /* the array pointer that is used to implement the Stack and store the values of the Stack */
     int m_top;        /* keeps track of the Stack */
     int m_size;       /* the size of the array that used to implement the Stack */
   public:
     /* DEFAULT CONSTRUCTOR */
     GenStack(){
-      m_stackArray = new T[128];
+      m_stackArray = new T[20];
       m_top = -1;
-      m_size = 128;
+      m_size = 20;
     }
     /*
       * OVERLOADED CONSTRUCTOR
@@ -39,7 +41,16 @@ class GenStack{
         if(!isFull())
           m_stackArray[++m_top] = data;
         else{
-          cerr << "ERROR: STACK OVERFLOW" << endl;
+          /* Dynamically increases the size of the array when the stack is full */
+          int temp = m_size;
+          T* m_stackArrayNew;
+          m_size *= 2; /* double the size of the array */
+           m_stackArrayNew = new T[m_size];
+          for(int i = 0; i < temp; ++i){
+            m_stackArrayNew[i] = m_stackArray[i];
+          }
+          delete m_stackArray;
+          m_stackArray = m_stackArrayNew;
         }
     }
     /*
@@ -49,7 +60,7 @@ class GenStack{
       if(!isEmpty())
         return m_stackArray[m_top--];
       else{
-        cerr << "ERROR: STACK IS EMPTY" << endl;
+        throw runtime_error("STACK IS EMPTY");
       }
     }
     /*
@@ -59,7 +70,7 @@ class GenStack{
       if(!isEmpty())
         return m_stackArray[m_top];
       else{
-        cerr << "ERROR: STACK IS EMPTY" << endl;
+        throw runtime_error("STACK IS EMPTY");
       }
     }
     /* AUXILIARY FUNCTIONS */
